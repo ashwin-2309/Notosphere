@@ -1,3 +1,4 @@
+// explain the following code
 // import necessary packages
 const express = require("express");
 const bcrypt = require("bcrypt");
