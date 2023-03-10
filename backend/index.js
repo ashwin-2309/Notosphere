@@ -2,6 +2,7 @@ const express = require("express");
 const { connection } = require("mongoose");
 const cors = require("cors");
 const userRouter = require("./routes/user.route");
+const noteRouter = require("./routes/note.route");
 // i have exported the router from user.route.js and router will be named userRouter in this file
 
 // require("dotenv").config();
@@ -14,6 +15,7 @@ app.use(express.json());
 
 // Routes for userRouter
 app.use("/user", userRouter);
+app.use("/note", noteRouter);
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
