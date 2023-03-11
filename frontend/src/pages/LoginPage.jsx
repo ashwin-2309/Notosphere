@@ -23,14 +23,19 @@ import {
 
 // Importing an image to use in the login page
 import loginImage from "../assets/loginImage.png";
+import { useNavigate } from "react-router-dom";
 
 // Defining the LoginPage functional component
 const LoginPage = () => {
+  const nav = useNavigate();
   // Reading 'auth', 'token', 'loading', and 'error' variables from global userReducer state using the useSelector hook
   const { auth, token, loading, error } = useSelector(
     (state) => state.userReducer
   );
-
+  console.log(auth, token);
+  if (auth) {
+    nav("/notes");
+  }
   // Receiving user email and password input through React hooks
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

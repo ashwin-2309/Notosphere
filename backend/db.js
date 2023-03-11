@@ -2,8 +2,9 @@
 const mongoose = require("mongoose");
 
 // Declare the uri of the mongodb atlas cluster where the data is stored
+
 const mongoUri =
-  "mongodb+srv://ash2309:saymyname@ashdev.t5njj.mongodb.net/test";
+  "mongodb+srv://ashaks2309:saymyname@cluster0.czuwknz.mongodb.net/test";
 
 // Connect to the mongodb database and specify properties of this connection
 mongoose

@@ -1,89 +1,131 @@
 import {
   Box,
+  Button,
   FormControl,
   FormLabel,
+  Heading,
   Input,
+  InputGroup,
+  InputRightElement,
+  Link,
   Stack,
-  Button,
+  Text,
+  useColorModeValue,
 } from "@chakra-ui/react";
-import React, { useState } from "react";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 
-const SignupPage = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    name: "",
-    password: "",
-    password2: "",
-  });
+export default function SignupPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(formData);
-    // do something with form data, like send to backend
-    // send to backend /users/register
+  const dispatch = useDispatch();
+  const { auth, token, loading, error } = useSelector(
+    (state) => state.userReducer
+  );
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
   };
 
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+  const handleNameChange = (event) => {
+    setName(event.target.value);
   };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSignup = async () => {
+    let data = await axios.post("http://localhost:4000/user/register", {
+      name,
+      email,
+      password,
+    });
+    let { message, status } = data.data;
+    if (status === 1) {
+      alert(message);
+    } else {
+      alert(message);
+    }
+  };
+
+  const bgColor = useColorModeValue("gray.50", "gray.800");
+  const bgBoxColor = useColorModeValue("white", "gray.700");
 
   return (
-    <Box>
-      <h1>Signup Page</h1>
-      <form onSubmit={handleSubmit}>
-        <Stack spacing={4}>
-          <FormControl id='email'>
-            <FormLabel>Email address</FormLabel>
-            <Input
-              type='email'
-              name='email'
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
+    <Box minH={"100vh"} align={"center"} justify={"center"} bg={bgColor}>
+      <Box w='80%'>
+        <Stack spacing={8} mx={"auto"} maxW={"xl"} py={12} px={6}>
+          <Stack align={"center"}>
+            <Heading fontSize={"4xl"} textAlign={"center"}>
+              Sign up
+            </Heading>
+            <Text fontSize={"lg"} color={"gray.600"}>
+              to enjoy all of our cool features
+            </Text>
+          </Stack>
 
-          <FormControl id='name'>
-            <FormLabel>Name</FormLabel>
-            <Input
-              type='text'
-              name='name'
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-
-          <FormControl id='password'>
-            <FormLabel>Password</FormLabel>
-            <Input
-              type='password'
-              name='password'
-              value={formData.password}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-
-          <FormControl id='password2'>
-            <FormLabel>Confirm Password</FormLabel>
-            <Input
-              type='password'
-              name='password2'
-              value={formData.password2}
-              onChange={handleChange}
-              required
-            />
-          </FormControl>
-
-          <Button colorScheme='blue' type='submit'>
-            Sign Up
-          </Button>
+          <Box rounded={"lg"} bg={bgBoxColor} boxShadow={"lg"} p={8}>
+            <Stack spacing={4}>
+              <FormControl id='name' isRequired>
+                <FormLabel>Name</FormLabel>
+                <Input type='text' onChange={handleNameChange} value={name} />
+              </FormControl>
+              <FormControl id='email' isRequired>
+                <FormLabel>Email address</FormLabel>
+                <Input
+                  type='email'
+                  onChange={handleEmailChange}
+                  value={email}
+                />
+              </FormControl>
+              <FormControl id='password' isRequired>
+                <FormLabel>Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    type={showPassword ? "text" : "password"}
+                    onChange={handlePasswordChange}
+                    value={password}
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  onClick={handleSignup}
+                  size='lg'
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                >
+                  Sign up
+                </Button>
+              </Stack>
+              <Stack pt={6}>
+                <Text align={"center"}>
+                  Already a user? <Link color={"blue.400"}>Login</Link>
+                </Text>
+              </Stack>
+            </Stack>
+          </Box>
         </Stack>
-      </form>
+      </Box>
     </Box>
   );
-};
-
-export default SignupPage;
+}
