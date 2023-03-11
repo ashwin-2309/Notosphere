@@ -16,14 +16,15 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../constants/config";
 
 export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  const dispatch = useDispatch();
+  const nav = useNavigate();
   const { auth, token, loading, error } = useSelector(
     (state) => state.userReducer
   );
@@ -41,7 +42,7 @@ export default function SignupPage() {
   };
 
   const handleSignup = async () => {
-    let data = await axios.post("http://localhost:4000/user/register", {
+    let data = await axios.post(BASE_URL + "/user/register", {
       name,
       email,
       password,
@@ -49,6 +50,7 @@ export default function SignupPage() {
     let { message, status } = data.data;
     if (status === 1) {
       alert(message);
+      nav("/login");
     } else {
       alert(message);
     }
@@ -59,11 +61,11 @@ export default function SignupPage() {
 
   return (
     <Box minH={"100vh"} align={"center"} justify={"center"} bg={bgColor}>
-      <Box w='80%'>
+      <Box w='70%'>
         <Stack spacing={8} mx={"auto"} maxW={"xl"} py={12} px={6}>
           <Stack align={"center"}>
             <Heading fontSize={"4xl"} textAlign={"center"}>
-              Sign up
+              Sign up with Notosphere
             </Heading>
             <Text fontSize={"lg"} color={"gray.600"}>
               to enjoy all of our cool features
@@ -119,7 +121,10 @@ export default function SignupPage() {
               </Stack>
               <Stack pt={6}>
                 <Text align={"center"}>
-                  Already a user? <Link color={"blue.400"}>Login</Link>
+                  Already a user?{" "}
+                  <Link color={"blue.400"} onClick={() => nav("/login")}>
+                    Login
+                  </Link>
                 </Text>
               </Stack>
             </Stack>

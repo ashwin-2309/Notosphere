@@ -20,7 +20,17 @@ export default function Navbar() {
   const { isOpen } = useDisclosure();
   const nav = useNavigate();
   return (
-    <Box bg='#7289da' px={4}>
+    <Box
+      bg='#7289da'
+      px={4}
+      zIndex={1000}
+      position={"fixed"}
+      top={0}
+      w={"100%"}
+      boxShadow={
+        "rgba(0, 0, 0, 0.16) 0px 3px 6px,rgba(0, 0, 0, 0.23) 0px 3px 6px"
+      }
+    >
       <Flex h={16} alignItems='center' justifyContent='space-between'>
         <Box
           fontWeight={"bold"}

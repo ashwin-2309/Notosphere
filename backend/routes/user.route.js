@@ -55,6 +55,7 @@ router.post("/login", async (req, res) => {
         }
         if (result) {
           let token = jwt.sign({ userId: user._id }, "secretkey");
+          console.log(token);
 
           // Send success response with token
           res.json({
