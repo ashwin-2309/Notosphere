@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import { userLoginReducer, userRegisterReducer } from "./reducers/userReducer";
 import {
   noteCreateReducer,
+  noteDeleteReducer,
   // noteDeleteReducer,
   noteListReducer,
   noteUpdateReducer,
@@ -15,7 +16,7 @@ const reducer = combineReducers({
   noteList: noteListReducer,
   noteCreate: noteCreateReducer,
   noteUpdate: noteUpdateReducer,
-  // noteDelete: noteDeleteReducer,
+  noteDelete: noteDeleteReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

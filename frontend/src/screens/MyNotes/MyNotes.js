@@ -3,7 +3,7 @@ import { Card, Button, Badge } from "react-bootstrap";
 import MainScreen from "../../components/MainScreen";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { listNotes } from "../../actions/notesActions";
+import { deleteNoteAction, listNotes } from "../../actions/notesActions";
 import Loading from "../../components/Loading";
 import ErrorMessage from "../../components/ErrorMessage";
 import Collapsible from "react-collapsible";
@@ -12,6 +12,7 @@ import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 const MyNotes = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const noteList = useSelector((state) => state.noteList);
   const { loading, error, notes } = noteList;
 
@@ -20,12 +21,25 @@ const MyNotes = () => {
 
   const noteCreate = useSelector((state) => state.noteCreate);
   const { success: successCreate } = noteCreate;
+
   const noteUpdate = useSelector((state) => state.noteUpdate);
   const { success: successUpdate } = noteUpdate;
+
+  const noteDelete = useSelector((state) => state.noteDelete);
+  const {
+    loading: loadingDelete,
+    error: errorDelete,
+    success: successDelete,
+  } = noteDelete;
+
+  const editHandler = (id) => {
+    navigate(`/note/${id}`);
+  };
 
   const deleteHandler = (id) => {
     if (window.confirm("Are you sure")) {
       // delete notes
+      dispatch(deleteNoteAction(id));
     }
   };
   useEffect(() => {
@@ -34,7 +48,14 @@ const MyNotes = () => {
     if (!userInfo) {
       navigate("/");
     }
-  }, [dispatch, successCreate, navigate, userInfo, successUpdate]);
+  }, [
+    dispatch,
+    successCreate,
+    navigate,
+    userInfo,
+    successUpdate,
+    successDelete,
+  ]);
 
   return (
     <MainScreen title={`Welcome Back ${userInfo.name}`}>
@@ -43,6 +64,12 @@ const MyNotes = () => {
           Create New Note
         </Button>
       </Link>
+      {/* if something inside of errorDelete render an error message */}
+      {errorDelete && (
+        <ErrorMessage variant='danger'>{errorDelete}</ErrorMessage>
+      )}
+      {/* if loadingDelete is true loading sign should be there */}
+      {loadingDelete && <Loading />}
       {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
       {loading && <Loading />}
       {notes?.reverse().map((note) => (
@@ -63,11 +90,12 @@ const MyNotes = () => {
                   {note.title}
                 </span>
                 <div>
-                  <Link to={`/note/${note._id}`}>
-                    <Button>Edit</Button>
-                  </Link>
-                  {/* <Button href={`/note/${note._id}`}>Edit</Button> */}
-
+                  <Button
+                    onClick={() => editHandler(note._id)}
+                    className='mx-2'
+                  >
+                    Edit
+                  </Button>
                   <Button
                     onClick={() => deleteHandler(note._id)}
                     variant='danger'
@@ -88,7 +116,7 @@ const MyNotes = () => {
               <blockquote className='blockquote mb-0'>
                 <ReactMarkdown>{note.content}</ReactMarkdown>
                 <footer className='blockquote-footer'>
-                  Created on -{note.createdAt.substring(0, 10) || Date.now()}
+                  Created on - {note.createdAt.substring(0, 10) || Date.now()}
                 </footer>
               </blockquote>
             </Card.Body>
