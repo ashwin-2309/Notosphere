@@ -25,7 +25,7 @@ const LoginScreen = () => {
 
   useEffect(() => {
     if (userInfo) {
-      window.location.href = "/mynotes";
+      navigate("/mynotes");
     }
   }, [userInfo, navigate]);
   // if the user is already logged in, redirect to my notes page
@@ -39,7 +39,7 @@ const LoginScreen = () => {
     <MainScreen title='LOGIN'>
       <div className='loginContainer'>
         {error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
-        {/* {loading && <Loading />} */}
+        {loading && <Loading />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='formBasicEmail'>
             <Form.Label>Email address</Form.Label>
