@@ -5,7 +5,7 @@ const {
   getNoteById,
   updateNote,
   deleteNote,
-} = require("../controllers/notecontroller");
+} = require("../controllers/noteController");
 const { protect } = require("../middlewares/authMiddleware");
 const router = express.Router();
 
