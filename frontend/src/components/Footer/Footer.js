@@ -10,11 +10,27 @@ const Footer = () => {
         bottom: "0",
         display: "flex",
         justifyContent: "center",
+        backgroundColor: "#1E1E1E",
+        color: "#FFF",
+        padding: "20px 0",
       }}
     >
       <Container>
         <Row>
-          <Col className='text-center py-3'>Copyright &copy Notosphere</Col>
+          <Col className='text-center'>
+            <p style={{ margin: 0 }}>
+              Copyright © {new Date().getFullYear()} Notosphere. All rights
+              reserved.
+            </p>
+            <a
+              href='https://github.com/ashwin-2309'
+              target='_blank'
+              rel='noopener noreferrer'
+              style={{ color: "#FFF", textDecoration: "none" }}
+            >
+              View my GitHub profile
+            </a>
+          </Col>
         </Row>
       </Container>
     </footer>
