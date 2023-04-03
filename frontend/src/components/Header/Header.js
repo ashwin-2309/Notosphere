@@ -18,7 +18,7 @@ const Header = ({ setSearch }) => {
   const { userInfo } = userLogin;
 
   const logoutHandler = () => {
-    dispatch({ type: "USER_LOGOUT" });
+    dispatch(logout());
     navigate("/");
   };
 
@@ -41,15 +41,25 @@ const Header = ({ setSearch }) => {
             </Form>
           </Nav>
           <Nav>
-            <Nav.Link>
-              <Link to='/mynotes'>MyNotes</Link>
-            </Nav.Link>
-            <NavDropdown title='Ashwin' id='basic-nav-dropdown'>
-              <NavDropdown.Item href='#action/3.1'>My Profile</NavDropdown.Item>
-              <NavDropdown.Item onClick={logoutHandler}>
-                Logout
-              </NavDropdown.Item>
-            </NavDropdown>
+            {userInfo ? (
+              <>
+                <Link to='/mynotes' className='nav-link'>
+                  MyNotes
+                </Link>
+                <NavDropdown title={`${userInfo.name}`} id='basic-nav-dropdown'>
+                  <NavDropdown.Item as={Link} to='/profile'>
+                    My Profile
+                  </NavDropdown.Item>
+                  <NavDropdown.Item onClick={logoutHandler}>
+                    Logout
+                  </NavDropdown.Item>
+                </NavDropdown>
+              </>
+            ) : (
+              <Link to='/login' className='nav-link'>
+                Login
+              </Link>
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>

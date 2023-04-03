@@ -1,13 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Container, Row, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
+
 const LandingPage = () => {
+  // const navigate = useNavigate();
+  // useEffect hook to redirect to mynotes page if user is already logged in
   // useEffect(() => {
+  //   document.title = "NotoSphere";
   //   const userInfo = localStorage.getItem("userInfo");
   //   if (userInfo) {
-  //     history.push("/mynotes");
+  //     navigate("/mynotes");
   //   }
-  // }, [history]);
+  // }, [navigate]);
   return (
     <div className='main'>
       <Container>
@@ -19,18 +25,20 @@ const LandingPage = () => {
                 A place to share your notes and learn from others
               </p>
               <div className='buttonContainer'>
-                <Button href='/login' size='lg' className='landingbutton'>
-                  Login
-                </Button>
-
-                <Button
-                  href='/register'
-                  size='lg'
-                  className='landingbutton'
-                  variant='outline-primary'
-                >
-                  Sign Up
-                </Button>
+                <Link to='/login'>
+                  <Button size='lg' className='landingbutton'>
+                    Login
+                  </Button>
+                </Link>
+                <Link to='/register'>
+                  <Button
+                    size='lg'
+                    className='landingbutton'
+                    variant='outline-primary'
+                  >
+                    Sign Up
+                  </Button>
+                </Link>
               </div>
             </div>
           </div>
