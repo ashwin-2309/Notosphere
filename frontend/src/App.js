@@ -22,7 +22,7 @@ function App() {
   return (
     <Router>
       <Header setSearch={setSearch} />
-      <main>
+      <main style={{ minHeight: "80vh" }}>
         <Routes>
           <Route path='/' element={<LandingPage />} />
           <Route path='/login' element={<LoginScreen />} />

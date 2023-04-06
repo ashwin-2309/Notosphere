@@ -23,12 +23,12 @@ const Footer = () => {
               reserved.
             </p>
             <a
-              href='https://github.com/ashwin-2309'
+              href='https://github.com/ashwin-2309/Notosphere'
               target='_blank'
               rel='noopener noreferrer'
               style={{ color: "#FFF", textDecoration: "none" }}
             >
-              View my GitHub profile
+              GitHub Repo
             </a>
           </Col>
         </Row>
